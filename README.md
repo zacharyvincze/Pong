@@ -9,6 +9,12 @@ In the root directory use `make` or `make build` to compile the program.  This w
 
 * To run the program, use either `make run` or `./pong` on the root directory of the project.
 * To remove the program, use `make clean` or just `rm ./pong`.
+* If you feel like doing a manual compile.  You can use `g++ src/main.cpp src/Player.cpp src/Ball.cpp -lncurses -o pong`.
+
+You may need to install ncurses depending on what kind of system you're using.
+
+* To install ncurses on a Debian based machine use `sudo apt-get install libncurses5-dev libncursesw5-dev`.
+* To install ncurses on OS X use `brew install homebrew/dupes/ncurses`.  Of course, this will require [brew](http://brew.sh/ "Brew Homepage") to install.
 
 ##Controls
 #####Player 1
