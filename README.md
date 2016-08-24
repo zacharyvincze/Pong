@@ -1,5 +1,7 @@
 #Pong
 
+![Screenshot](/screenshots/pong.png)
+
 A simple pong game created in C++ with ncurses.
 
 ##Usage
