@@ -1,10 +1,10 @@
-#Pong
+# Pong
 
 ![Screenshot](/screenshots/pong.png)
 
 A simple pong game created in C++ with ncurses.
 
-##Usage
+## Usage
 In the root directory use `make` or `make build` to compile the program.  This will create a `./pong` executable in the root directory of the project.
 
 * To run the program, use either `make run` or `./pong` on the root directory of the project.
