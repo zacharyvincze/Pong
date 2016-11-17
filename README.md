@@ -4,6 +4,9 @@
 
 A simple pong game created in C++ with ncurses.
 
+## Status
+[![Build Status](https://travis-ci.org/zacharyvincze/Pong.svg?branch=master)](https://travis-ci.org/zacharyvincze/Pong)
+
 ## Usage
 In the root directory use `make` or `make build` to compile the program.  This will create a `./pong` executable in the root directory of the project.
 
