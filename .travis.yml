@@ -1,0 +1,2 @@
+language: cpp
+script: "g++ src/main.cpp src/Player.cpp src/Ball.cpp -lncurses -o pong"
