@@ -7,5 +7,11 @@ build:
 run:
 	./pong || true
 
+install: build
+	install -m 0755 -s pong /usr/local/bin
+
 clean:
 	rm pong
+
+uninstall:
+	-@rm /usr/local/bin/pong
