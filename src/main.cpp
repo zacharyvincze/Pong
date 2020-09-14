@@ -5,18 +5,26 @@
 
 
 int ch;
-int width = 80;
-int height = 24;
+constexpr int width = 80;
+constexpr int height = 24;
 int dir = 1;
 int player1Points, player2Points = 0;
 bool quit;
 char wallTexture, playerTexture;
 bool player1Serve, player2Serve = false;
 
-Player player1(height / 2, 2);
-Player player2(height / 2, width - 3);
+// magic numbers
+constexpr int mid_wall = width / 2;
+constexpr int mid_height = height / 2;
+constexpr int right_most = width - 3;
+constexpr int left_most = 2;
+constexpr int up_most = 3;
+constexpr int down_most = height - 4;
 
-Ball ball(height / 2, 3, 1);
+Player player1(mid_height, 2);
+Player player2(mid_height, width - 3);
+
+Ball ball(mid_height, 3, 1);
 
 void setup();
 void input();
@@ -61,35 +69,35 @@ void input()
     ch = getch();
     switch(ch) {
         case KEY_UP:
-            if(player2.getY() != 3)
+            if(player2.getY() != up_most)
                 player2.setY(player2.getY() - 1);
             break;
         case KEY_DOWN:
-            if(player2.getY() != height - 4)
+            if(player2.getY() != down_most)
                 player2.setY(player2.getY() + 1);
             break;
         case KEY_LEFT:
-            if(player2.getX() != width / 2 + 4)
+            if(player2.getX() != mid_wall + 4)
                 player2.setX(player2.getX() - 1);
             break;
         case KEY_RIGHT:
-            if(player2.getX() != width - 3)
+            if(player2.getX() != right_most)
                 player2.setX(player2.getX() + 1);
             break;
         case 'w':
-            if(player1.getY() != 3)
+            if(player1.getY() != up_most)
                 player1.setY(player1.getY() - 1);
             break;
         case 's':
-            if(player1.getY() != height - 4)
+            if(player1.getY() != down_most)
                 player1.setY(player1.getY() + 1);
             break;
         case 'a':
-            if(player1.getX() != 2)
+            if(player1.getX() != left_most)
                 player1.setX(player1.getX() - 1);
             break;
         case 'd':
-            if(player1.getX() != width / 2 - 4)
+            if(player1.getX() != mid_wall - 4)
                 player1.setX(player1.getX() + 1);
             break;
         case ' ':
