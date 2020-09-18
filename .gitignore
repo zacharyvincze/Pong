@@ -6,3 +6,5 @@ pong
 .idea/Pong.iml
 
 src/CMakeLists.txt
+
+.vscode/

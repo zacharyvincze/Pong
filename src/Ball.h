@@ -10,9 +10,9 @@
 class Ball {
 public:
     Ball(double x, double y, int speed);
-    double getX() { return x; }
-    double getY() { return y; }
-    int getSpeed() { return speed; }
+    double getX() const { return x; }
+    double getY() const { return y; }
+    int getSpeed() const { return speed; }
     void setX(double a) {
         x = a;
     }
@@ -22,8 +22,8 @@ public:
     void setSpeed(int a){
         speed = a;
     }
-    void drawBall(double x, double y) {
-        mvaddch(x, y, 'o');
+    void drawBall() const {
+        mvaddch(y, x, 'o');
     }
 private:
     double x, y;
