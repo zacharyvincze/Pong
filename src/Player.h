@@ -11,7 +11,8 @@
 class Player {
 
 public:
-    Player(int x, int y);
+    Player(int y, int x);
+
     int getX() const { return x; }
     int getY() const { return y; }
     int getHeight() const { return height; }

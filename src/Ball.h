@@ -9,7 +9,8 @@
 
 class Ball {
 public:
-    Ball(double x, double y, int speed);
+    Ball(double y, double x, int speed);
+
     double getX() const { return x; }
     double getY() const { return y; }
     int getSpeed() const { return speed; }

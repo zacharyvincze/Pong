@@ -2,42 +2,33 @@
 #include <stdlib.h>
 #include "Player.h"
 #include "Ball.h"
+#include "Magics.h"
 
 
-int ch;
-constexpr int width = 80;
-constexpr int height = 24;
-int player1Points, player2Points = 0;
+Magics setup();
+void input();
+void logic();
+void draw();
+
+constexpr char wallTexture = '*';
 bool quit = false;
-char wallTexture, playerTexture;
+int player1Points, player2Points = 0;
 bool player1Serve, player2Serve = false;
 
 // magic numbers
-constexpr int mid_wall = width / 2;
-constexpr int mid_height = height / 2;
-constexpr int right_most = width - 3;
-constexpr int left_most = 2;
-constexpr int up_most = 3;
-constexpr int down_most = height - 4;
+const Magics data = setup();
 
 enum class Directions {
     right, left, right_up, right_down, left_up, left_down
 };
 Directions dir = Directions::right;
 
-Player player1(mid_height, 2);
-Player player2(mid_height, width - 3);
+Player player1 (data.mid_height, 2);
+Player player2 (data.mid_height, data.width - 3);
+Ball ball (data.mid_height, 3, 1);
 
-Ball ball(mid_height, 3, 1);
-
-void setup();
-void input();
-void logic();
-void draw();
 
 int main() {
-
-    setup();
 
     // Game loop
     while(!quit)
@@ -50,11 +41,8 @@ int main() {
     return 0;
 }
 
-void setup()
+Magics setup()
 {
-    // Textures
-    wallTexture = '*';
-
     // Init ncurses
     initscr();
     cbreak();
@@ -63,45 +51,43 @@ void setup()
     keypad(stdscr, TRUE);
     timeout(50);
 
-    quit = false;
-    player1Points = 0;
-    player2Points = 0;
+    return {LINES, COLS};
 }
 
 void input()
 {
-    ch = getch();
+    int ch = getch();
     switch(ch) {
         case KEY_UP:
-            if(player2.getY() != up_most)
+            if(player2.getY() != data.up_most)
                 player2.setY(player2.getY() - 1);
             break;
         case KEY_DOWN:
-            if(player2.getY() != down_most)
+            if(player2.getY() != data.down_most)
                 player2.setY(player2.getY() + 1);
             break;
         case KEY_LEFT:
-            if(player2.getX() != mid_wall + 4)
+            if(player2.getX() != data.mid_wall + 4)
                 player2.setX(player2.getX() - 1);
             break;
         case KEY_RIGHT:
-            if(player2.getX() != right_most)
+            if(player2.getX() != data.right_most)
                 player2.setX(player2.getX() + 1);
             break;
         case 'w':
-            if(player1.getY() != up_most)
+            if(player1.getY() != data.up_most)
                 player1.setY(player1.getY() - 1);
             break;
         case 's':
-            if(player1.getY() != down_most)
+            if(player1.getY() != data.down_most)
                 player1.setY(player1.getY() + 1);
             break;
         case 'a':
-            if(player1.getX() != left_most)
+            if(player1.getX() != data.left_most)
                 player1.setX(player1.getX() - 1);
             break;
         case 'd':
-            if(player1.getX() != mid_wall - 4)
+            if(player1.getX() != data.mid_wall - 4)
                 player1.setX(player1.getX() + 1);
             break;
         case ' ':
@@ -145,7 +131,7 @@ void logic()
     }
 
     // if player collide or already passed the wall
-    if(ball.getY() >= height - 2) {
+    if(ball.getY() >= data.height - 2) {
         if (dir == Directions::left_down)
             dir = Directions::left_up;
         else
@@ -163,7 +149,7 @@ void logic()
         player1Serve = true;
     }
 
-    else if(ball.getX() == width) {
+    else if(ball.getX() == data.width) {
         player1Points++;
         player2Serve = true;
     }
@@ -214,16 +200,16 @@ void draw()
 {
     erase();
     refresh();
-    for(int i = 0; i < width; i++) {
+    for(int i = 0; i < data.width; i++) {
         mvaddch(0, i, wallTexture);
-        mvaddch(height - 1, i, wallTexture);
+        mvaddch(data.height - 1, i, wallTexture);
     }
 
-    for(int i = 1; i < height - 1; i++)
-        mvaddch(i, mid_wall, ':');
+    for(int i = 1; i < data.height - 1; i++)
+        mvaddch(i, data.mid_wall, ':');
 
-    mvprintw(1, 0.25 * width, "%i", player1Points);
-    mvprintw(1, 0.75 * width, "%i", player2Points);
+    mvprintw(1, 0.25 * data.width, "%i", player1Points);
+    mvprintw(1, 0.75 * data.width, "%i", player2Points);
 
     ball.drawBall();
     player1.drawPlayer();
