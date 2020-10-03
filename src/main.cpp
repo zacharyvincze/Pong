@@ -1,5 +1,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
+#include <fstream>
+#include <regex>
 #include "Player.h"
 #include "Ball.h"
 #include "Magics.h"
@@ -9,8 +11,8 @@ Magics setup();
 void input();
 void logic();
 void draw();
+Config readconf();
 
-constexpr char wallTexture = '*';
 bool quit = false;
 int player1Points, player2Points = 0;
 bool player1Serve, player2Serve = false;
@@ -23,9 +25,13 @@ enum class Directions {
 };
 Directions dir = Directions::right;
 
+const Config conf = readconf();
+
+const char wallTexture = conf.wallTexture;
+
 Player player1 (data.mid_height, 2);
 Player player2 (data.mid_height, data.width - 3);
-Ball ball (data.mid_height, 3, 1);
+Ball ball (data.mid_height, 3, conf.ball_speed);
 
 
 int main() {
@@ -39,6 +45,34 @@ int main() {
     }
     endwin();
     return 0;
+}
+
+Config readconf()
+{
+    using namespace std;
+
+    mvprintw(data.height-4,2,"reading the file...");
+    refresh();
+
+    ifstream readfile {"settings.conf"};
+    if (!readfile)
+        throw "can't open the file for reading";
+
+    Config result;
+
+    regex pattern {R"(^(\w+):\s?(.+)$)"};
+    for (string line; getline(readfile, line);) {
+        smatch match;
+        if (regex_search(line, match, pattern)) {
+            // test for valid variables
+            if (match[1].str() == "ball_speed")
+                result.ball_speed = stoi(match[2].str());
+            else if (match[1].str() == "wallTexture")
+                result.wallTexture = match[2].str()[1];
+        }
+    }
+
+    return result;
 }
 
 Magics setup()
@@ -199,7 +233,6 @@ void logic()
 void draw()
 {
     erase();
-    refresh();
     for(int i = 0; i < data.width; i++) {
         mvaddch(0, i, wallTexture);
         mvaddch(data.height - 1, i, wallTexture);
@@ -214,4 +247,6 @@ void draw()
     ball.drawBall();
     player1.drawPlayer();
     player2.drawPlayer();
+
+    refresh();
 }

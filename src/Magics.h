@@ -13,3 +13,8 @@ struct Magics {
     up_most,
     down_most;
 };
+
+struct Config {
+    int ball_speed;
+    char wallTexture;
+};
