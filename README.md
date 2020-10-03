@@ -32,6 +32,8 @@ You may need to install ncurses depending on what kind of system you're using.
 * `LEFT KEY` - Move left
 * `RIGHT KEY` - Move right
 
+### Note: As currently there is no support for detecting several keys at the same time (ncurses doesn't support this!) try **not** to hold a key and tap it several time instead.
+
 To serve the ball, use the `SPACE` button.  It's the same for both players.
 
 ## Troubleshooting

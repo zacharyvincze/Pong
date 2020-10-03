@@ -11,17 +11,18 @@
 class Player {
 
 public:
-    Player(int x, int y);
-    int getX() { return x; }
-    int getY() { return y; }
-    int getHeight() { return height; }
+    Player(int y, int x);
+
+    int getX() const { return x; }
+    int getY() const { return y; }
+    int getHeight() const { return height; }
     void setX(int a) {
         x = a;
     }
     void setY(int a) {
         y = a;
     }
-    void drawPlayer(int y, int x)
+    void drawPlayer() const
     {
         mvaddch(y + 2, x, '|');
         mvaddch(y + 1, x, '|');
